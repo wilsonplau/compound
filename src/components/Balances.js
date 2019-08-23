@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import daiIcon from '../images/dai.svg'
+import ethIcon from '../images/eth.svg'
+import '../styles/Balances.scss'
 
 const Balances = ({ maker }) => {
   const [ethBalance, setEthBalance] = useState(0);
@@ -18,14 +21,13 @@ const Balances = ({ maker }) => {
 
   return (
     <div className="balances">
-      <small>ACCOUNT BALANCES</small>
-      <div className="balances__ETH">
-        <small>ETH</small>
-        <h1>{ ethBalance.toString() }</h1>
+      <div className="balances__item balances__ETH">
+        <small>ETH BALANCE</small>
+        <h1><img src={ethIcon} />{ ethBalance.toString() }</h1>
       </div>
-      <div className="balances__DAI">
-        <small>DAI</small>
-        <h1>{ daiBalance.toString() }</h1>
+      <div className="balances__item balances__DAI">
+        <small>DAI BALANCE</small>
+        <h1><img src={daiIcon} />{ daiBalance.toString() }</h1>
       </div>
     </div>
   );

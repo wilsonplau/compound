@@ -13,7 +13,7 @@ const Visualization = () => {
   const calculateData = () => {
     const returnArr = [];
     for (let i = 0; i < 50; i++) {
-      returnArr.push(100 * Math.pow(1.10, i));
+      returnArr.push((100 * Math.pow(1.10, i)).toFixed(2));
     }
     return returnArr;
   }
@@ -29,6 +29,10 @@ const Visualization = () => {
     ]
   };
   const options = {
+    tooltips: {
+      mode: 'index',
+      axis: 'y'
+    },
     scales: {
       yAxes: [{
         display: false,
@@ -51,6 +55,7 @@ const Visualization = () => {
         data={data}
         legend={{ display: false }}
         options={options}
+        height={120}
       />
     </div>
   );
