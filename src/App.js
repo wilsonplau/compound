@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import Balances from './components/Balances'
 import SavingsAccount from './components/SavingsAccount'
+import Visualization from './components/Visualization'
 
 const CETH_ABI = require('./ABI/cETH');
 const CDAI_ABI = require('./ABI/cDAI');
@@ -42,6 +43,7 @@ const App = () => {
   return (
     <div className="App"> 
       <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} />
+      <Visualization />
       <Balances maker={maker} />
     </div>
   );
