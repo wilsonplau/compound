@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Maker from '@makerdao/dai';
 import Web3 from 'web3';
+import axios from 'axios';
 
 import Balances from './components/Balances'
 import SavingsAccount from './components/SavingsAccount'
@@ -16,6 +17,7 @@ const App = () => {
   const [maker, setMaker] = useState();
   const [cETH, setcETH] = useState();
   const [cDAI, setcDAI] = useState()
+  const [cDAIData, setcDAIData] = useState({});
   
   useEffect(() => {
     const init = async () => {
@@ -26,12 +28,20 @@ const App = () => {
       setMaker(makerBrowser);
       setcETH(new web3.eth.Contract(CETH_ABI, CETH_KOVAN_ADDRESS));
       setcDAI(new web3.eth.Contract(CDAI_ABI, CDAI_KOVAN_ADDRESS));
+      getcDaiInfo();
     }
     init();
   }, []);
 
+  const getcDaiInfo = async() => {
+    const response = await axios.get("https://api.compound.finance/api/v2/ctoken");
+    const cDai = response.data.cToken.find((token) => token.symbol === "cDAI");
+    setcDAIData(cDai);
+  }
+
   return (
     <div className="App"> 
+      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} />
       <Balances maker={maker} />
     </div>
   );
