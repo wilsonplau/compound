@@ -32,6 +32,7 @@ const App = () => {
 
   return (
     <div className="App"> 
+      <Balances maker={maker} />
     </div>
   );
 }
