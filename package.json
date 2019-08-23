@@ -5,7 +5,9 @@
   "dependencies": {
     "@makerdao/dai": "^0.18.4",
     "axios": "^0.19.0",
+    "chart.js": "^2.8.0",
     "react": "^16.9.0",
+    "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
     "web3": "^1.2.1"
