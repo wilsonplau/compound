@@ -1,0 +1,48 @@
+.exchange {
+  background-color: white;
+  border-radius: 10px;
+  margin-right: 25px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 5px #DDD;
+  padding: 25px;
+
+}
+.exchange__top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.exchange__bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  input {
+    flex: 1;
+    border: none;
+    font-size: 36px;
+    margin-left: 10px;
+  }
+}
+.exchange__toggle {
+  background-color: #F5F5F5;
+  margin-top: -5px;
+  padding: 3px;
+  height: 26px;
+  border-radius: 25px;
+  display: flex;
+  .exchange__toggleButton {
+    padding: 0px 3px;
+    height: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    &[aria-pressed="true"] {
+      background-color: white;
+    }
+  }
+  img {
+    height: 15px;
+    margin: 0 5px;
+  }
+}

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import Eth2DaiDirect from '@makerdao/dai-plugin-eth2dai-direct';
 import Maker from '@makerdao/dai';
 import Web3 from 'web3';
 import axios from 'axios';
 
 import './styles/Reset.scss'
 import './styles/App.scss'
+import './styles/Styles.scss'
 
-import Balances from './components/Balances'
-import SavingsAccount from './components/SavingsAccount'
-import Visualization from './components/Visualization'
+import Balances from './components/Balances';
+import SavingsAccount from './components/SavingsAccount';
+import Visualization from './components/Visualization';
+import Exchange from './components/Exchange'
+import useFX from './helpers/useFX'
 
 const CETH_ABI = require('./ABI/cETH');
 const CDAI_ABI = require('./ABI/cDAI');
@@ -22,13 +26,14 @@ const App = () => {
   const [cETH, setcETH] = useState();
   const [cDAI, setcDAI] = useState()
   const [cDAIData, setcDAIData] = useState({});
+  const { USDJPY } = useFX();
   
   useEffect(() => {
     const init = async () => {
       await window.ethereum.enable();
       const accounts = await web3.eth.getAccounts();  
       setAddress(accounts[0]);
-      const makerBrowser = await Maker.create('browser');
+      const makerBrowser = await Maker.create('browser', { plugins: [Eth2DaiDirect] });
       setMaker(makerBrowser);
       setcETH(new web3.eth.Contract(CETH_ABI, CETH_KOVAN_ADDRESS));
       setcDAI(new web3.eth.Contract(CDAI_ABI, CDAI_KOVAN_ADDRESS));
@@ -45,9 +50,12 @@ const App = () => {
 
   return (
     <div className="App"> 
-      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} />
+      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} USDJPY={USDJPY} />
       <Visualization />
-      <Balances maker={maker} />
+      <div className="bottom">
+        <Balances maker={maker} USDJPY={USDJPY} />
+        <Exchange maker={maker} />
+      </div>
     </div>
   );
 }

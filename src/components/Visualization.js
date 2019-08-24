@@ -6,7 +6,7 @@ const Visualization = () => {
   const calculateDateRanges = () => {
     const returnArr = [];
     for (let i = 0; i < 50; i++) {
-      returnArr.push(2019 + i);
+      returnArr.push(`Year ${2019 + i}`);
     }
     return returnArr;
   }
@@ -30,8 +30,9 @@ const Visualization = () => {
   };
   const options = {
     tooltips: {
-      mode: 'index',
-      axis: 'y'
+      mode: "index",
+      intersect: false,
+      displayColors: false
     },
     scales: {
       yAxes: [{
@@ -42,6 +43,7 @@ const Visualization = () => {
         },
       }],
       xAxes: [{
+        display: false,
         gridLines: {
           display: false,
         },

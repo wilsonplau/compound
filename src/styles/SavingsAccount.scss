@@ -6,15 +6,29 @@
   h1 {
     font-size: 48px;
     margin-bottom: 10px;
+    span {
+      font-size: 36px;
+      font-weight: 100;
+      color: #888;
+    }
   }
   h2 {
     font-size: 18px;
     line-height: 1.3em;
+  }
+  small {
+    color: #D69E2E;
   }
   img {
     margin-right: 10px;
   }
   strong {
     font-weight: 600;
+  }
+}
+.savingsAccount__slider {
+  margin-top: 25px;
+  h2 {
+    margin-bottom: 10px;
   }
 }
