@@ -1,0 +1,69 @@
+.deposit {
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  margin-right: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 5px #DDD;
+}
+.deposit__top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.deposit__bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  position: relative;
+  span {
+    position: absolute;
+    right: 55px;
+    bottom: 10px;
+    color: #AAA;
+    font-weight: 300;
+  }
+  input {
+    box-sizing: border-box;
+    width: 200px;
+    border-radius: 10px 0 0 10px;
+    padding: 5px 10px;
+    border: 1px solid #CCC;
+    font-size: 30px;
+    margin-left: 10px;
+  }
+  button {
+    width: 50px;
+    height: 50px;
+    background-color: #222;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.deposit__toggle {
+  background-color: #F5F5F5;
+  margin-top: -5px;
+  padding: 3px;
+  border-radius: 25px;
+  display: flex;
+  .deposit__toggleButton {
+    padding: 3px 8px;
+    height: 24px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    &[aria-pressed="true"] {
+      border: 1px solid #DDD;
+      background-color: white;
+    }
+  }
+  img {
+    height: 15px;
+    margin: 0 5px;
+  }
+}

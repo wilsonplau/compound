@@ -4,9 +4,8 @@ import '../styles/SavingsAccount.scss';
 import 'rc-slider/assets/index.css';
 import daiIcon from '../images/dai.svg'
 
-const SavingsAccount = ({ address, cDAI, cDAIData, USDJPY }) => {
+const SavingsAccount = ({ address, cDAI, cDAIData, USDJPY, monthlySaving, setMonthlySaving }) => {
   const [cDaiBalance, setcDaiBalance] = useState(0);
-  const [monthlySaving, setMonthlySaving] = useState(1000000);
 
   useEffect(() => {
     const init = async () => {

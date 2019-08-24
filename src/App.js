@@ -12,6 +12,7 @@ import Balances from './components/Balances';
 import SavingsAccount from './components/SavingsAccount';
 import Visualization from './components/Visualization';
 import Exchange from './components/Exchange'
+import Deposit from './components/Deposit'
 import useFX from './helpers/useFX'
 
 const CETH_ABI = require('./ABI/cETH');
@@ -27,6 +28,8 @@ const App = () => {
   const [cDAI, setcDAI] = useState()
   const [cDAIData, setcDAIData] = useState({});
   const { USDJPY } = useFX();
+
+  const [monthlySaving, setMonthlySaving] = useState(1000000);
   
   useEffect(() => {
     const init = async () => {
@@ -50,11 +53,12 @@ const App = () => {
 
   return (
     <div className="App"> 
-      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} USDJPY={USDJPY} />
+      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} USDJPY={USDJPY} monthlySaving={monthlySaving} setMonthlySaving={setMonthlySaving} />
       <Visualization />
       <div className="bottom">
         <Balances maker={maker} USDJPY={USDJPY} />
-        <Exchange maker={maker} />
+        <Exchange maker={maker} USDJPY={USDJPY} />
+        <Deposit monthlySaving={monthlySaving} USDJPY={USDJPY} />
       </div>
     </div>
   );

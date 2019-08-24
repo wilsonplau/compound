@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import daiIcon from '../images/dai.svg'
 import ethIcon from '../images/eth.svg'
+import enterIcon from '../images/enter.svg'
 import '../styles/Exchange.scss'
 
 const Exchange = ({ maker }) => {
@@ -40,7 +41,7 @@ const Exchange = ({ maker }) => {
       <div className="exchange__bottom">
         { exchangeState === "buy" ? <img src={daiIcon} /> : <img src={ethIcon} /> }
         <input type="text" value={amount} onChange={(e)=>handleInput(e)}/>
-        <button>Confirm</button>
+        <button onClick={exchangeState === "buy" ? buyDai : buyEth }><img src={enterIcon} /></button>
       </div>
     </div>
   )

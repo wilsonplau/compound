@@ -4,9 +4,9 @@
   margin-right: 25px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   box-shadow: 0 0 5px #DDD;
-  padding: 25px;
-
+  padding: 20px;
 }
 .exchange__top {
   display: flex;
@@ -18,26 +18,38 @@
   flex-direction: row;
   justify-content: flex-start;
   input {
-    flex: 1;
-    border: none;
-    font-size: 36px;
+    box-sizing: border-box;
+    width: 200px;
+    border-radius: 10px 0 0 10px;
+    padding: 5px 10px;
+    border: 1px solid #CCC;
+    font-size: 30px;
     margin-left: 10px;
+  }
+  button {
+    width: 50px;
+    height: 50px;
+    background-color: #222;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 .exchange__toggle {
   background-color: #F5F5F5;
   margin-top: -5px;
   padding: 3px;
-  height: 26px;
   border-radius: 25px;
   display: flex;
   .exchange__toggleButton {
-    padding: 0px 3px;
-    height: 20px;
+    padding: 3px;
+    height: 24px;
     border-radius: 20px;
     display: flex;
     align-items: center;
     &[aria-pressed="true"] {
+      border: 1px solid #DDD;
       background-color: white;
     }
   }
