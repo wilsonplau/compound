@@ -3,19 +3,19 @@ import daiIcon from '../images/dai.svg'
 import enterIcon from '../images/enter.svg'
 import '../styles/Deposit.scss'
 
-const Deposit = ({ monthlySaving, USDJPY }) => {
+const Deposit = ({ annualSaving, USDJPY }) => {
   const [depositAmount, setDepositAmount] = useState(0);
   const [depositPeriod, setDepositPeriod] = useState("daily");
 
   useEffect(() => {
     if (depositPeriod === "daily") {
-      setDepositAmount((monthlySaving/(365*USDJPY)).toFixed(0) );
+      setDepositAmount((annualSaving/(365*USDJPY)).toFixed(0) );
     } else if (depositPeriod === "monthly") {
-      setDepositAmount((monthlySaving/(12*USDJPY)).toFixed(0) );
+      setDepositAmount((annualSaving/(12*USDJPY)).toFixed(0) );
     } else {
-      setDepositAmount((monthlySaving/USDJPY).toFixed(0));
+      setDepositAmount((annualSaving/USDJPY).toFixed(0));
     }  
-  }, [monthlySaving, USDJPY, depositPeriod])
+  }, [annualSaving, USDJPY, depositPeriod])
 
   return (
     <div className="deposit">

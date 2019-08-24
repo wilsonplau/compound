@@ -29,7 +29,7 @@ const App = () => {
   const [cDAIData, setcDAIData] = useState({});
   const { USDJPY } = useFX();
 
-  const [monthlySaving, setMonthlySaving] = useState(1000000);
+  const [annualSaving, setAnnualSaving] = useState(1000000);
   
   useEffect(() => {
     const init = async () => {
@@ -53,12 +53,12 @@ const App = () => {
 
   return (
     <div className="App"> 
-      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} USDJPY={USDJPY} monthlySaving={monthlySaving} setMonthlySaving={setMonthlySaving} />
-      <Visualization />
+      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} USDJPY={USDJPY} annualSaving={annualSaving} setAnnualSaving={setAnnualSaving} />
+      <Visualization annualSaving={annualSaving} cDAIData={cDAIData} USDJPY={USDJPY} />
       <div className="bottom">
         <Balances maker={maker} USDJPY={USDJPY} />
         <Exchange maker={maker} USDJPY={USDJPY} />
-        <Deposit monthlySaving={monthlySaving} USDJPY={USDJPY} />
+        <Deposit annualSaving={annualSaving} USDJPY={USDJPY} />
       </div>
     </div>
   );

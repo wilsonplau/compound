@@ -4,7 +4,7 @@ import '../styles/SavingsAccount.scss';
 import 'rc-slider/assets/index.css';
 import daiIcon from '../images/dai.svg'
 
-const SavingsAccount = ({ address, cDAI, cDAIData, USDJPY, monthlySaving, setMonthlySaving }) => {
+const SavingsAccount = ({ address, cDAI, cDAIData, USDJPY, annualSaving, setAnnualSaving }) => {
   const [cDaiBalance, setcDaiBalance] = useState(0);
 
   useEffect(() => {
@@ -23,8 +23,8 @@ const SavingsAccount = ({ address, cDAI, cDAIData, USDJPY, monthlySaving, setMon
       <h2><strong>Interest earned to date:</strong> { cDaiBalance && (cDaiBalance - 180).toFixed(2) }</h2>
 
       <div className="savingsAccount__slider">
-        <h2><strong>How much do you want to save per year?</strong> ¥{monthlySaving.toLocaleString()}</h2>
-        <Slider min={0} max={10000000} step={10000} value={monthlySaving} onChange={(val) => setMonthlySaving(val)}/>
+        <h2><strong>How much do you want to save per year?</strong> ¥{annualSaving.toLocaleString()}</h2>
+        <Slider min={0} max={10000000} step={10000} value={annualSaving} onChange={(val) => setAnnualSaving(val)}/>
       </div>
     </div>
   );
