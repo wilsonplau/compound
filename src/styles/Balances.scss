@@ -1,27 +1,25 @@
 .balances {
-  height: calc(100vh - 577px);
-  background-color: #F5F5F5;
   display: flex;
   flex-direction: row;
-  padding: 25px;
   .balances__item {
     padding: 25px;
-    width: 250px;
     background-color: white;
     border-radius: 10px;
     margin-right: 25px;
-    display: flex;
-    flex-direction: column;
-    small {
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
+    display: column;
+    align-items: center;
+    box-shadow: 0 0 5px #DDD;
     img {
       margin-right: 10px;
+      grid-area: icon;
     }
     h1 {
       font-size: 36px;
+      margin-bottom: 5px;
+    }
+    h2 {
+      color: #888;
+      font-weight: 300;
     }
   }
 }

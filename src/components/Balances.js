@@ -3,7 +3,7 @@ import daiIcon from '../images/dai.svg'
 import ethIcon from '../images/eth.svg'
 import '../styles/Balances.scss'
 
-const Balances = ({ maker }) => {
+const Balances = ({ maker, USDJPY }) => {
   const [ethBalance, setEthBalance] = useState(0);
   const [daiBalance, setDaiBalance] = useState(0);
 
@@ -21,13 +21,15 @@ const Balances = ({ maker }) => {
 
   return (
     <div className="balances">
-      <div className="balances__item balances__ETH">
+      <div className="balances__item">
         <small>ETH BALANCE</small>
-        <h1><img src={ethIcon} />{ ethBalance.toString() }</h1>
+        <h1><img src={ethIcon} />{ ethBalance && ethBalance.toNumber().toFixed(2) }</h1>
+        <h2>( ~¥{ ethBalance && (ethBalance.toNumber() * USDJPY).toFixed(0) })</h2>
       </div>
-      <div className="balances__item balances__DAI">
+      <div className="balances__item">
         <small>DAI BALANCE</small>
-        <h1><img src={daiIcon} />{ daiBalance.toString() }</h1>
+        <h1><img src={daiIcon} />{ daiBalance && daiBalance.toNumber().toFixed(2) }</h1>
+        <h2>( ~¥{ daiBalance && (daiBalance.toNumber() * USDJPY).toFixed(0) })</h2>
       </div>
     </div>
   );
