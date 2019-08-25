@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
+import '../styles/Visualization.scss'
 
-const Visualization = ({ cDAIData, annualSaving, USDJPY }) => {
+const Visualization = ({ cDaiData, annualSaving, USDJPY }) => {
   const [interestRate, setInterestRate] = useState(0.10);
   const startingAmount = 100;
 
   useEffect(() => {
-    if (cDAIData.supply_rate)
-      setInterestRate(parseFloat(cDAIData.supply_rate.value));
-  }, [cDAIData])
+    if (cDaiData.supply_rate)
+      setInterestRate(parseFloat(cDaiData.supply_rate.value));
+  }, [cDaiData])
 
   const calculateDateRanges = () => {
     const returnArr = [];
@@ -34,7 +35,9 @@ const Visualization = ({ cDAIData, annualSaving, USDJPY }) => {
     },
     datasets: [
       {
-        data: calculateData()
+        data: calculateData(),
+        backgroundColor: "#FFFFF0",
+        borderColor: "#ECC94B"
       }
     ]
   };
@@ -42,7 +45,10 @@ const Visualization = ({ cDAIData, annualSaving, USDJPY }) => {
     tooltips: {
       mode: "index",
       intersect: false,
-      displayColors: false
+      displayColors: false,
+      callbacks: {
+        label: (tooltipItem) => `${parseInt(tooltipItem.value).toLocaleString("en")}`
+      }
     },
     scales: {
       yAxes: [{

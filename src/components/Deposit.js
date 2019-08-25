@@ -3,19 +3,26 @@ import daiIcon from '../images/dai.svg'
 import enterIcon from '../images/enter.svg'
 import '../styles/Deposit.scss'
 
-const Deposit = ({ annualSaving, USDJPY }) => {
+const Deposit = ({ web3, annualSaving, USDJPY, cDAI, address, refreshBalances }) => {
   const [depositAmount, setDepositAmount] = useState(0);
   const [depositPeriod, setDepositPeriod] = useState("daily");
 
   useEffect(() => {
     if (depositPeriod === "daily") {
-      setDepositAmount((annualSaving/(365*USDJPY)).toFixed(0) );
+      setDepositAmount((annualSaving/(365*USDJPY)).toFixed(0));
     } else if (depositPeriod === "monthly") {
-      setDepositAmount((annualSaving/(12*USDJPY)).toFixed(0) );
+      setDepositAmount((annualSaving/(12*USDJPY)).toFixed(0));
     } else {
       setDepositAmount((annualSaving/USDJPY).toFixed(0));
     }  
   }, [annualSaving, USDJPY, depositPeriod])
+
+  const handleSubmit = async () => {
+    const amount = web3.utils.toWei(depositAmount, 'ether');
+    const balances = web3.eth.accounts 
+    await cDAI.methods.mint(amount).send({from: address});
+    refreshBalances();
+  }
 
   return (
     <div className="deposit">
@@ -29,9 +36,9 @@ const Deposit = ({ annualSaving, USDJPY }) => {
       </div>
       <div className="deposit__bottom">
         <img src={daiIcon} />
-        <input type="text" value={depositAmount} />
+        <input type="text" value={depositAmount} readOnly />
         <span>( ~¥{ (depositAmount * USDJPY).toFixed(0) })</span>
-        <button><img src={enterIcon} /></button>
+        <button onClick={handleSubmit}><img src={enterIcon} /></button>
       </div>
     </div>
   )

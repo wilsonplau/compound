@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Slider from 'rc-slider';
 import '../styles/SavingsAccount.scss';
 import 'rc-slider/assets/index.css';
 import daiIcon from '../images/dai.svg'
 
-const SavingsAccount = ({ address, cDAI, cDAIData, USDJPY, annualSaving, setAnnualSaving }) => {
-  const [cDaiBalance, setcDaiBalance] = useState(0);
-
-  useEffect(() => {
-    const init = async () => {
-      const balance = await cDAI.methods.balanceOfUnderlying(address).call();
-      setcDaiBalance((balance / Math.pow(10, 18)).toFixed(2));
-    }
-    if (cDAI && address) init();
-  }, [cDAI, address])
+const SavingsAccount = ({ cDaiBalance, cDaiData, USDJPY, annualSaving, setAnnualSaving }) => {
 
   return (
     <div className="savingsAccount">
       <small>YOUR SAVINGS ACCOUNT</small>
       <h1><img src={daiIcon} />{ cDaiBalance } <span>(¥{ (cDaiBalance * USDJPY).toFixed(0) })</span> </h1>
-      <h2><strong>Current interest rate:</strong> { cDAIData.supply_rate && `${(cDAIData.supply_rate.value * 100).toFixed(2)}%` }</h2>
-      <h2><strong>Interest earned to date:</strong> { cDaiBalance && (cDaiBalance - 180).toFixed(2) }</h2>
+      <h2><strong>Current interest rate:</strong> { cDaiData.supply_rate && `${(cDaiData.supply_rate.value * 100).toFixed(2)}%` }</h2>
+      {/* <h2><strong>Interest earned to date:</strong> { cDaiBalance && (cDaiBalance - 180).toFixed(2) }</h2> */}
 
       <div className="savingsAccount__slider">
         <h2><strong>How much do you want to save per year?</strong> ¥{annualSaving.toLocaleString()}</h2>

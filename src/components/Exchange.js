@@ -4,18 +4,20 @@ import ethIcon from '../images/eth.svg'
 import enterIcon from '../images/enter.svg'
 import '../styles/Exchange.scss'
 
-const Exchange = ({ maker }) => {
+const Exchange = ({ maker, refreshBalances }) => {
   const [amount, setAmount] = useState(0);
   const [exchangeState, setExchangeState] = useState("buy");
   
   const buyDai = async() => {
     await maker.authenticate();
-    const response = await maker.service('exchange').buy('DAI', 'ETH', amount);
+    await maker.service('exchange').buy('DAI', 'ETH', amount);
+    refreshBalances();
   }
 
   const buyEth = async() => {
     await maker.authenticate();
-    const response = await maker.service('exchange').buy('ETH', 'DAI', amount);
+    await maker.service('exchange').buy('ETH', 'DAI', amount);
+    refreshBalances();
   }
 
   const handleInput = (e) => {  

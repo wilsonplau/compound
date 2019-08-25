@@ -15,22 +15,30 @@ import Exchange from './components/Exchange'
 import Deposit from './components/Deposit'
 import useFX from './helpers/useFX'
 
-const CETH_ABI = require('./ABI/cETH');
 const CDAI_ABI = require('./ABI/cDAI');
-const CETH_KOVAN_ADDRESS = "0xd83f707f003a1f0b1535028ab356fce2667ab855";
 const CDAI_KOVAN_ADDRESS = "0x0a1e4d0b5c71b955c0a5993023fc48ba6e380496";
 
 const App = () => {
   const [web3] = useState(new Web3(window.ethereum));
   const [address, setAddress] = useState("");
   const [maker, setMaker] = useState();
-  const [cETH, setcETH] = useState();
   const [cDAI, setcDAI] = useState()
-  const [cDAIData, setcDAIData] = useState({});
+  const [cDaiData, setcDaiData] = useState({});
   const { USDJPY } = useFX();
-
+  const [ETHUSD, setETHUSD] = useState(0);
+  const [refreshState, setRefreshState] = useState(false);
   const [annualSaving, setAnnualSaving] = useState(1000000);
   
+  const [cDaiBalance, setcDaiBalance] = useState(0);
+  useEffect(() => {
+    const init = async () => {
+      const balance = await cDAI.methods.balanceOfUnderlying(address).call();
+      setcDaiBalance((balance / Math.pow(10, 18)).toFixed(2));
+    }
+    if (cDAI && address) init();
+  }, [cDAI, address, refreshState])
+
+
   useEffect(() => {
     const init = async () => {
       await window.ethereum.enable();
@@ -38,27 +46,33 @@ const App = () => {
       setAddress(accounts[0]);
       const makerBrowser = await Maker.create('browser', { plugins: [Eth2DaiDirect] });
       setMaker(makerBrowser);
-      setcETH(new web3.eth.Contract(CETH_ABI, CETH_KOVAN_ADDRESS));
+      const priceService = makerBrowser.service('price');
+      const ethPrice = await priceService.getEthPrice();
+      setETHUSD(ethPrice.toNumber());
       setcDAI(new web3.eth.Contract(CDAI_ABI, CDAI_KOVAN_ADDRESS));
       getcDaiInfo();
     }
     init();
   }, []);
 
+  const refreshBalances = () => {
+    setRefreshState(!refreshState);
+  }
+
   const getcDaiInfo = async() => {
     const response = await axios.get("https://api.compound.finance/api/v2/ctoken");
     const cDai = response.data.cToken.find((token) => token.symbol === "cDAI");
-    setcDAIData(cDai);
+    setcDaiData(cDai);
   }
 
   return (
     <div className="App"> 
-      <SavingsAccount cDAI={cDAI} address={address} cDAIData={cDAIData} USDJPY={USDJPY} annualSaving={annualSaving} setAnnualSaving={setAnnualSaving} />
-      <Visualization annualSaving={annualSaving} cDAIData={cDAIData} USDJPY={USDJPY} />
+      <SavingsAccount cDAI={cDAI} address={address} cDaiBalance={cDaiBalance} cDaiData={cDaiData} USDJPY={USDJPY} refreshState={refreshState} annualSaving={annualSaving} setAnnualSaving={setAnnualSaving} />
+      <Visualization annualSaving={annualSaving} cDaiData={cDaiData} USDJPY={USDJPY} />
       <div className="bottom">
-        <Balances maker={maker} USDJPY={USDJPY} />
-        <Exchange maker={maker} USDJPY={USDJPY} />
-        <Deposit annualSaving={annualSaving} USDJPY={USDJPY} />
+        <Balances USDJPY={USDJPY} refreshState={refreshState} address={address} web3={web3} ETHUSD={ETHUSD}/>
+        <Exchange maker={maker} USDJPY={USDJPY} refreshBalances={refreshBalances} />
+        <Deposit web3={web3} annualSaving={annualSaving} USDJPY={USDJPY} cDAI={cDAI} address={address} refreshBalances={refreshBalances} />
       </div>
     </div>
   );
