@@ -32,3 +32,14 @@
     margin-bottom: 10px;
   }
 }
+.savingsAccount__loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}

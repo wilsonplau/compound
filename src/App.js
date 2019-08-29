@@ -28,12 +28,18 @@ const App = () => {
   const [ETHUSD, setETHUSD] = useState(0);
   const [refreshState, setRefreshState] = useState(false);
   const [annualSaving, setAnnualSaving] = useState(1000000);
+  const [loading, setLoading] = useState({ethBalance: true, daiBalance: true, savingsBalance: true})
   
+  const setLoadingSingle = (state) => {
+    setLoading((prevLoading) => ({...prevLoading, ...state}));
+  }
+
   const [cDaiBalance, setcDaiBalance] = useState(0);
   useEffect(() => {
     const init = async () => {
       const balance = await cDAI.methods.balanceOfUnderlying(address).call();
       setcDaiBalance((balance / Math.pow(10, 18)).toFixed(2));
+      setLoadingSingle({savingsBalance: false})
     }
     if (cDAI && address) init();
   }, [cDAI, address, refreshState])
@@ -53,7 +59,7 @@ const App = () => {
       getcDaiInfo();
     }
     init();
-  }, []);
+  }, [web3]);
 
   const refreshBalances = () => {
     setRefreshState(!refreshState);
@@ -67,12 +73,12 @@ const App = () => {
 
   return (
     <div className="App"> 
-      <SavingsAccount cDAI={cDAI} address={address} cDaiBalance={cDaiBalance} cDaiData={cDaiData} USDJPY={USDJPY} refreshState={refreshState} annualSaving={annualSaving} setAnnualSaving={setAnnualSaving} />
+      <SavingsAccount loading={loading} cDAI={cDAI} address={address} cDaiBalance={cDaiBalance} cDaiData={cDaiData} USDJPY={USDJPY} refreshState={refreshState} annualSaving={annualSaving} setAnnualSaving={setAnnualSaving} />
       <Visualization annualSaving={annualSaving} cDaiData={cDaiData} USDJPY={USDJPY} />
       <div className="bottom">
-        <Balances USDJPY={USDJPY} refreshState={refreshState} address={address} web3={web3} ETHUSD={ETHUSD}/>
+        <Balances setLoadingSingle={setLoadingSingle} loading={loading} USDJPY={USDJPY} refreshState={refreshState} address={address} web3={web3} ETHUSD={ETHUSD}/>
         <Exchange maker={maker} USDJPY={USDJPY} refreshBalances={refreshBalances} />
-        <Deposit web3={web3} annualSaving={annualSaving} USDJPY={USDJPY} cDAI={cDAI} address={address} refreshBalances={refreshBalances} />
+        <Deposit setLoadingSingle={setLoadingSingle} web3={web3} annualSaving={annualSaving} USDJPY={USDJPY} cDAI={cDAI} address={address} refreshBalances={refreshBalances} />
       </div>
     </div>
   );

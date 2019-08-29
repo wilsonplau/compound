@@ -3,7 +3,7 @@ import daiIcon from '../images/dai.svg'
 import enterIcon from '../images/enter.svg'
 import '../styles/Deposit.scss'
 
-const Deposit = ({ web3, annualSaving, USDJPY, cDAI, address, refreshBalances }) => {
+const Deposit = ({ web3, annualSaving, USDJPY, cDAI, address, refreshBalances, setLoadingSingle }) => {
   const [depositAmount, setDepositAmount] = useState(0);
   const [depositPeriod, setDepositPeriod] = useState("daily");
 
@@ -17,11 +17,15 @@ const Deposit = ({ web3, annualSaving, USDJPY, cDAI, address, refreshBalances })
     }  
   }, [annualSaving, USDJPY, depositPeriod])
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const amount = web3.utils.toWei(depositAmount, 'ether');
-    const balances = web3.eth.accounts 
-    await cDAI.methods.mint(amount).send({from: address});
-    refreshBalances();
+    cDAI.methods.mint(amount).send({from: address})
+      .on('transactionHash', () => {
+        setLoadingSingle({daiBalance: true, savingsBalance: true})
+      })
+      .on('confirmation', () => {
+        refreshBalances();
+      });
   }
 
   return (
