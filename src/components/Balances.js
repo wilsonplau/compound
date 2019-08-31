@@ -21,7 +21,7 @@ const Balances = ({ address, web3, USDJPY, refreshState, ETHUSD, loading, setLoa
       setLoadingSingle({daiBalance: false})
     }
     if (web3 && address) init();
-  }, [web3, address, refreshState, setLoadingSingle])
+  }, [web3, address, refreshState])
 
   return (
     <div className="balances">
