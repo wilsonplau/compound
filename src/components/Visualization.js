@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import '../styles/Visualization.scss'
 
-const Visualization = ({ cDaiData, annualSaving, USDJPY }) => {
+const Visualization = ({ cDaiData, cDaiBalance = 100, annualSaving, USDJPY }) => {
   const [interestRate, setInterestRate] = useState(0.10);
-  const startingAmount = 100;
 
   useEffect(() => {
     if (cDaiData.supply_rate)
@@ -21,13 +20,14 @@ const Visualization = ({ cDaiData, annualSaving, USDJPY }) => {
   const calculateData = () => {
     const returnArr = [];
     for (let i = 0; i < 50; i++) {
-      if (i === 0) { returnArr.push(startingAmount) }
+      if (i === 0) { returnArr.push(cDaiBalance) }
       else {
         returnArr.push(Math.round(returnArr[i - 1] * (1 + interestRate) + parseFloat(annualSaving) / USDJPY));
       }
     }
     return returnArr;
   }
+
   const data = {
     labels: calculateDateRanges(),
     legend: {

@@ -20,21 +20,22 @@ const CDAI_KOVAN_ADDRESS = "0x0a1e4d0b5c71b955c0a5993023fc48ba6e380496";
 
 const App = () => {
   const [web3] = useState(new Web3(window.ethereum));
-  const [address, setAddress] = useState("");
   const [maker, setMaker] = useState();
   const [cDAI, setcDAI] = useState()
+
+  const [address, setAddress] = useState("");
   const [cDaiData, setcDaiData] = useState({});
+  const [cDaiBalance, setcDaiBalance] = useState(0);
   const { USDJPY } = useFX();
   const [ETHUSD, setETHUSD] = useState(0);
   const [refreshState, setRefreshState] = useState(false);
   const [annualSaving, setAnnualSaving] = useState(1000000);
+
   const [loading, setLoading] = useState({ethBalance: true, daiBalance: true, savingsBalance: true})
-  
   const setLoadingSingle = (state) => {
     setLoading((prevLoading) => ({...prevLoading, ...state}));
   }
 
-  const [cDaiBalance, setcDaiBalance] = useState(0);
   useEffect(() => {
     const init = async () => {
       const balance = await cDAI.methods.balanceOfUnderlying(address).call();
@@ -44,6 +45,14 @@ const App = () => {
     if (cDAI && address) init();
   }, [cDAI, address, refreshState])
 
+  useEffect(() => {
+    const init = async () => {
+      const priceService = maker.service('price');
+      const ethPrice = await priceService.getEthPrice();
+      setETHUSD(ethPrice.toNumber());
+    }
+    if (maker) init();
+  }, [maker])
 
   useEffect(() => {
     const init = async () => {
@@ -52,9 +61,6 @@ const App = () => {
       setAddress(accounts[0]);
       const makerBrowser = await Maker.create('browser', { plugins: [Eth2DaiDirect] });
       setMaker(makerBrowser);
-      const priceService = makerBrowser.service('price');
-      const ethPrice = await priceService.getEthPrice();
-      setETHUSD(ethPrice.toNumber());
       setcDAI(new web3.eth.Contract(CDAI_ABI, CDAI_KOVAN_ADDRESS));
       getcDaiInfo();
     }
@@ -72,13 +78,13 @@ const App = () => {
   }
 
   return (
-    <div className="App"> 
-      <SavingsAccount loading={loading} cDAI={cDAI} address={address} cDaiBalance={cDaiBalance} cDaiData={cDaiData} USDJPY={USDJPY} refreshState={refreshState} annualSaving={annualSaving} setAnnualSaving={setAnnualSaving} />
-      <Visualization annualSaving={annualSaving} cDaiData={cDaiData} USDJPY={USDJPY} />
-      <div className="bottom">
-        <Balances setLoadingSingle={setLoadingSingle} loading={loading} USDJPY={USDJPY} refreshState={refreshState} address={address} web3={web3} ETHUSD={ETHUSD}/>
-        <Exchange maker={maker} USDJPY={USDJPY} refreshBalances={refreshBalances} />
-        <Deposit setLoadingSingle={setLoadingSingle} web3={web3} annualSaving={annualSaving} USDJPY={USDJPY} cDAI={cDAI} address={address} refreshBalances={refreshBalances} />
+    <div className="app"> 
+      <SavingsAccount cDaiBalance={cDaiBalance} cDaiData={cDaiData} USDJPY={USDJPY} annualSaving={annualSaving} setAnnualSaving={setAnnualSaving} loading={loading} />
+      <Visualization cDaiBalance={cDaiBalance} cDaiData={cDaiData} annualSaving={annualSaving} USDJPY={USDJPY} />
+      <div className="app__bottom">
+        <Balances address={address} web3={web3} USDJPY={USDJPY} refreshState={refreshState} ETHUSD={ETHUSD} loading={loading} setLoadingSingle={setLoadingSingle} />
+        <Exchange maker={maker} refreshBalances={refreshBalances} />
+        <Deposit web3={web3} annualSaving={annualSaving} USDJPY={USDJPY} cDAI={cDAI} address={address} refreshBalances={refreshBalances} setLoadingSingle={setLoadingSingle} />
       </div>
     </div>
   );

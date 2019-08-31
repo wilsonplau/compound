@@ -21,20 +21,20 @@ const Balances = ({ address, web3, USDJPY, refreshState, ETHUSD, loading, setLoa
       setLoadingSingle({daiBalance: false})
     }
     if (web3 && address) init();
-  }, [web3, address, refreshState])
+  }, [web3, address, refreshState, setLoadingSingle])
 
   return (
     <div className="balances">
       <div className="balances__item">
         { loading.ethBalance && <div className="balances__loading"><Loader type="TailSpin" color="#ECC94B" height={50} width={50} /></div>}
         <small>ETH BALANCE</small>
-        <h1><img src={ethIcon} />{ ethBalance && ethBalance.toFixed(2) }</h1>
+        <h1><img src={ethIcon} alt="ETH" />{ ethBalance && ethBalance.toFixed(2) }</h1>
         <h2>( ~¥{ ethBalance && (ethBalance * ETHUSD * USDJPY).toFixed(0) })</h2>
       </div>
       <div className="balances__item">
         { loading.daiBalance && <div className="balances__loading"><Loader type="TailSpin" color="#ECC94B" height={50} width={50} /></div>}
         <small>DAI BALANCE</small>
-        <h1><img src={daiIcon} />{ daiBalance && daiBalance.toFixed(2) }</h1>
+        <h1><img src={daiIcon} alt="DAI" />{ daiBalance && daiBalance.toFixed(2) }</h1>
         <h2>( ~¥{ daiBalance && (daiBalance* USDJPY).toFixed(0) })</h2>
       </div>
     </div>

@@ -32,18 +32,18 @@ const Exchange = ({ maker, refreshBalances }) => {
         <small>EXCHANGE</small>
         <div className="exchange__toggle">
           <button className="exchange__toggleButton" aria-pressed={exchangeState === "buy"} onClick={() => setExchangeState("buy")}>
-            <img src={ethIcon} /> > <img src={daiIcon} />
+            <img src={ethIcon} alt="ETH" /> > <img src={daiIcon} alt="DAI" />
           </button>
           <button className="exchange__toggleButton" aria-pressed={exchangeState === "sell"} onClick={() => setExchangeState("sell")}>
-            <img src={daiIcon} /> > <img src={ethIcon} />
+            <img src={daiIcon} alt="DAI" /> > <img src={ethIcon} alt="ETH" />
           </button>
         </div>        
       </div>
 
       <div className="exchange__bottom">
-        { exchangeState === "buy" ? <img src={daiIcon} /> : <img src={ethIcon} /> }
+        { exchangeState === "buy" ? <img src={daiIcon} alt="DAI" /> : <img src={ethIcon} alt="ETH" /> }
         <input type="text" value={amount} onChange={(e)=>handleInput(e)}/>
-        <button onClick={exchangeState === "buy" ? buyDai : buyEth }><img src={enterIcon} /></button>
+        <button onClick={exchangeState === "buy" ? buyDai : buyEth }><img src={enterIcon} alt="enter" /></button>
       </div>
     </div>
   )

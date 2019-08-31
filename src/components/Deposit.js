@@ -39,10 +39,10 @@ const Deposit = ({ web3, annualSaving, USDJPY, cDAI, address, refreshBalances, s
         </div>
       </div>
       <div className="deposit__bottom">
-        <img src={daiIcon} />
+        <img src={daiIcon} alt="DAI" />
         <input type="text" value={depositAmount} readOnly />
         <span>( ~¥{ (depositAmount * USDJPY).toFixed(0) })</span>
-        <button onClick={handleSubmit}><img src={enterIcon} /></button>
+        <button onClick={handleSubmit}><img src={enterIcon} alt="enter" /></button>
       </div>
     </div>
   )

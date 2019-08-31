@@ -11,7 +11,7 @@ const SavingsAccount = ({ cDaiBalance, cDaiData, USDJPY, annualSaving, setAnnual
     <div className="savingsAccount">
       {loading.savingsBalance && <div className="savingsAccount__loading"><Loader type="TailSpin" color="#ECC94B" height={50} width={50} /></div> }
       <small>YOUR SAVINGS ACCOUNT</small>
-      <h1><img src={daiIcon} />{ cDaiBalance } <span>(¥{ (cDaiBalance * USDJPY).toFixed(0) })</span> </h1>
+      <h1><img src={daiIcon} alt="DAI" />{ cDaiBalance } <span>(¥{ (cDaiBalance * USDJPY).toFixed(0) })</span> </h1>
       <h2><strong>Current interest rate:</strong> { cDaiData.supply_rate && `${(cDaiData.supply_rate.value * 100).toFixed(2)}%` }</h2>
 
       <div className="savingsAccount__slider">
